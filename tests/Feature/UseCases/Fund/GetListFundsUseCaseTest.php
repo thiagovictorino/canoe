@@ -8,15 +8,15 @@ beforeEach(function () {
     $this->useCase = resolve(GetListFundsUseCase::class);
 });
 
-describe('Given a list of founds', function () {
+describe('Given a list of founds, when', function () {
 
-    it('when it executes, then should return all funds', function () {
+    it('executes, then should return all funds', function () {
         Fund::factory()->count(10)->create();
         $funds = $this->useCase->execute();
         expect($funds)->toHaveCount(10);
     });
 
-    it('when it executes filtering by name, it should return the correct funds ', function () {
+    it('executes filtering by name, it should return the correct funds ', function () {
         Fund::factory()->create(['name' => 'Fund 1']);
         Fund::factory()->create(['name' => 'Fund 2']);
         Fund::factory()->create(['name' => 'Fund 3']);
@@ -28,7 +28,7 @@ describe('Given a list of founds', function () {
             ->toBe('Fund 1');
     });
 
-    it('when it executes filtering by year, it should return the correct funds ', function () {
+    it('executes filtering by year, it should return the correct funds ', function () {
         Fund::factory()->create(['year' => 2020]);
         Fund::factory()->create(['year' => 2021]);
         Fund::factory()->create(['year' => 2022]);
@@ -40,7 +40,7 @@ describe('Given a list of founds', function () {
             ->toBe(2020);
     });
 
-    it('when it executes filtering by manager_id, it should return the correct funds ', function () {
+    it('executes filtering by manager_id, it should return the correct funds ', function () {
         $manager = Manager::factory()->create();
         Fund::factory()->create();
         Fund::factory()->create(['manager_id' => $manager->id]);
@@ -53,11 +53,11 @@ describe('Given a list of founds', function () {
             ->toBe($manager->id);
     });
 
-    it('when it executes filtering using an invalid filter, it should throw an exception ', function () {
+    it('executes filtering using an invalid filter, it should throw an exception ', function () {
         $this->expectException(\InvalidArgumentException::class);
         $this->useCase->execute([
             'name' => 'valid_name',
-            'invalid_filter' => 'invalid_value'
+            'invalid_filter' => 'invalid_value',
         ]);
     });
 });

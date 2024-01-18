@@ -13,6 +13,7 @@ class GetListFundsUseCase
         'year',
         'manager_id',
     ];
+
     /**
      * @return Collection<Fund>
      */
@@ -33,8 +34,6 @@ class GetListFundsUseCase
 
         if (isset($filters['name'])) {
             $fund->where('name', 'ilike', $filters['name']);
-
-
         }
 
         if (isset($filters['year'])) {
@@ -52,14 +51,10 @@ class GetListFundsUseCase
     {
         $invalidFilters = array_diff(array_keys($filters), $this->allowedFilters);
 
-        if (!empty($invalidFilters)) {
+        if (! empty($invalidFilters)) {
             throw new \InvalidArgumentException(
-                sprintf(
-                    'Invalid filters: %s',
-                    implode(', ', $invalidFilters)
-                )
+                sprintf('Invalid filters: %s', implode(', ', $invalidFilters))
             );
         }
     }
-
 }
