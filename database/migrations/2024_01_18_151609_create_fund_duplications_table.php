@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('duplicate_fund_id')->constrained('funds');
             $table->boolean('is_revised')->default(false);
             $table->timestamps();
+            $table->unique(['original_fund_id', 'duplicate_fund_id']);
         });
     }
 
